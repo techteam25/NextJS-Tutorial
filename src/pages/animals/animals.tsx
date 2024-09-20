@@ -2,44 +2,38 @@ import { Card, CardContent, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-interface JSONData {
-  name: string;
-  number: Number;
-  key: string;
-}
+import Animal from "../../types/animal";
 
 const Test = () => {
   const [toggle, setToggle] = useState(true);
-  const [arrayData, setArrayData] = useState<JSONData[]>([]);
+  const [arrayData, setArrayData] = useState<Animal[]>([]);
 
   useEffect(() => {
     setToggle(false);
     async function getData() {
-      if (toggle) {
-        await axios.get("/api/example").then((response) => {
-          for (let int in response.data) {
-            setArrayData((arrayData) => [...arrayData, response.data[int]]);
-          }
-        });
-        return;
-      }
+      await axios.get("/api/animal").then((response) => {
+        for (let int in response.data) {
+          setArrayData([...response.data.animals]);
+        }
+      });
+      return;
     }
     getData();
-  }, [arrayData, toggle]);
+  }, [arrayData]);
 
   return (
     <div className="main-contianer" style={{ paddingTop: "5vh" }}>
       <Card sx={{ ml: "15vw", mr: "15vw" }}>
         <CardContent>
           <Typography variant="h3" style={{ textAlign: "center" }}>
-            I like chicken
+            There are currently {arrayData.length}.  wut if there wuz moar animals?
           </Typography>
         </CardContent>
+        
       </Card>
 
-      {arrayData.map((element) => (
-        <Card variant="outlined" sx={{ m: "5vw" }} key={element.key}>
+      {arrayData.map((e) => (
+        <Card variant="outlined" sx={{ m: "5vw" }} key={e.key}>
           <CardContent>
             <Box
               sx={{
@@ -49,7 +43,7 @@ const Test = () => {
                 alignItems: "center",
               }}
             >
-              <Typography sx={{ ml: "10vw" }}>{element.name}</Typography>
+              <Typography sx={{ ml: "10vw" }}>{e.name}</Typography>
             </Box>
           </CardContent>
         </Card>

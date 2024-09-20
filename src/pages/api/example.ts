@@ -8,7 +8,7 @@ export default function handler(
 ) {
   res.status(200).json({ 
     record1 : {
-        name: 'Title of Page', 
+        name: 'What if there wuz chicken?', 
         number: 1, 
         key: "key1"
     }})
