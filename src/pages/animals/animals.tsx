@@ -4,9 +4,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Animal from "../../types/animal";
 
-const Test = () => {
+const Animals = () => {
   const [toggle, setToggle] = useState(true);
   const [arrayData, setArrayData] = useState<Animal[]>([]);
+  const [checkCounter, setCheckCounter] = useState(0);
+
+  setInterval(() => {
+    setCheckCounter(checkCounter + 1);
+  }, 1510)
 
   useEffect(() => {
     setToggle(false);
@@ -16,10 +21,11 @@ const Test = () => {
           setArrayData([...response.data.animals]);
         }
       });
+      console.log(arrayData)
       return;
     }
     getData();
-  }, [arrayData]);
+  }, [checkCounter]);
 
   return (
     <div className="main-contianer" style={{ paddingTop: "5vh" }}>
@@ -52,4 +58,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Animals;
